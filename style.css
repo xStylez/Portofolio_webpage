@@ -525,10 +525,7 @@ ul {
 }
 
 .list-value--live {
-  background: linear-gradient(120deg, var(--accent) 10%, var(--coral) 65%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--accent);
 }
 
 .list-value--live::before {
@@ -577,12 +574,34 @@ ul {
   margin-inline: auto;
 }
 
+.work {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+
+.work .container {
+  width: min(1360px, calc(100% - 3rem));
+}
+
 .project {
   display: grid;
-  grid-template-columns: 1.1fr 1fr;
-  gap: clamp(2rem, 5vw, 3.5rem);
+  grid-template-columns: 1.25fr 0.9fr;
+  gap: clamp(1.5rem, 3vw, 2.75rem);
   align-items: center;
   padding-top: 70px;
+}
+
+.project:nth-of-type(even) {
+  grid-template-columns: 0.9fr 1.25fr;
+}
+
+.project:nth-of-type(even) .project-body {
+  order: 1;
+}
+
+.project:nth-of-type(even) .project-visual {
+  order: 2;
 }
 
 .project-visual {
@@ -592,28 +611,42 @@ ul {
 
 .project-slider {
   position: relative;
-  transform: rotate(-1.5deg);
+  aspect-ratio: 3 / 2;
+  background: var(--bg);
+  border-radius: 16px;
+  border: 1px solid var(--coral-soft);
+  box-shadow: 0 20px 60px rgb(29, 29, 29);
+  overflow: hidden;
   transition: transform 0.5s var(--ease);
   z-index: 2;
 }
 
+.project:nth-of-type(2) .project-slider,
+.project:nth-of-type(3) .project-slider {
+  aspect-ratio: 2 / 1;
+}
+
+.project:nth-of-type(4) .project-slider {
+  aspect-ratio: 5 / 4;
+}
+
 .project:hover .project-slider {
-  transform: rotate(0deg) translateY(-4px);
+  transform: translateY(-4px);
 }
 
 .project-shot {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
-  border-radius: 16px;
-  border: 1px solid var(--coral-soft);
-  box-shadow: 0 20px 60px rgb(29, 29, 29);
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
   z-index: 1;
-  display: none;          /* hide by default */
+  display: none;
 }
 
 .project-shot.is-active {
-  display: block;         /* show current */
+  display: block;
 }
 
 
@@ -641,7 +674,7 @@ ul {
 
 .project-glow {
   position: absolute;
-  inset: 20% -15% -15% 20%;
+  inset: 25% -5% -15% 20%;
   background: var(--accent-glow);
   filter: blur(50px);
   z-index: 0;
@@ -660,7 +693,7 @@ ul {
 .project-name {
   margin: 0 0 1rem;
   font-family: var(--font-display);
-  font-size: clamp(1.75rem, 3vw, 2.35rem);
+  font-size: clamp(2rem, 3.2vw, 2.75rem);
   font-weight: 700;
   letter-spacing: -0.02em;
 }
@@ -668,6 +701,8 @@ ul {
 .project-desc {
   margin: 0 0 1.35rem;
   color: var(--text-muted);
+  font-size: 1.08rem;
+  line-height: 1.6;
 }
 
 .project-stack {
@@ -743,5 +778,106 @@ ul {
   background:
     radial-gradient(ellipse 80% 60% at 50% 0%, rgba(46, 196, 182, 0.12), transparent 60%),
     var(--bg-elevated);
+}
+
+@media (max-width: 980px) {
+  .section-title {
+    font-size: clamp(2.4rem, 8vw, 3.2rem);
+    padding-top: 2rem;
+    padding-bottom: 1.25rem;
+  }
+
+  .about-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .about-text {
+    max-width: none;
+  }
+
+  .skills-honeycomb {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.25rem 1.75rem;
+    padding-top: 2.5rem;
+    max-width: 36rem;
+    margin-inline: auto;
+  }
+
+  .cert-row {
+    flex-wrap: wrap;
+    padding-top: 4rem;
+  }
+
+  .cert-logo {
+    width: min(220px, 70vw);
+  }
+
+  .work {
+    width: auto;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .work .container {
+    width: 100%;
+  }
+
+  .project,
+  .project:nth-of-type(even) {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding-top: 3rem;
+  }
+
+  .project-visual,
+  .project:nth-of-type(even) .project-body,
+  .project:nth-of-type(even) .project-visual {
+    order: 0;
+  }
+
+  .contact {
+    padding-top: 4rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .content {
+    padding-inline: 1rem;
+  }
+
+  .site-nav {
+    gap: 1rem;
+  }
+
+  .hero {
+    padding: 6rem 1.25rem 5rem;
+  }
+
+  .about-list li {
+    grid-template-columns: 1fr;
+    gap: 0.1rem;
+  }
+
+  .list-label {
+    line-height: 1.4;
+  }
+
+  .skill-card {
+    max-width: 76px;
+  }
+
+  .skill-card img {
+    width: 42px;
+    height: 42px;
+  }
+
+  .project-name {
+    font-size: 1.85rem;
+  }
+
+  .contact-inner {
+    padding-inline: 1rem;
+  }
 }
 

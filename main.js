@@ -1,9 +1,7 @@
 (() => {
 const header = document.querySelector(".site-header");
 const toTop = document.querySelector(".to-top");
-const shots = [...document.querySelectorAll(".project-slider .project-shot")];
-const prevBtn = document.querySelector(".shot-btn--prev");
-const nextBtn = document.querySelector(".shot-btn--next");
+const sliders = [...document.querySelectorAll(".project-slider")];
 const navLinks = [...document.querySelectorAll(".site-nav a")];
 const sections = [...document.querySelectorAll("main section[id], .hero")];
 const nav = document.querySelector(".site-nav");
@@ -29,15 +27,24 @@ const nav = document.querySelector(".site-nav");
   window.addEventListener("scroll", onScroll, { passive: true });
 
 
-let i = 0;
+sliders.forEach((slider) => {
+  const shots = [...slider.querySelectorAll(".project-shot")];
+  const visual = slider.parentElement;
+  const prevBtn = visual?.querySelector(".shot-btn--prev");
+  const nextBtn = visual?.querySelector(".shot-btn--next");
+  if (!shots.length) return;
 
-function showShot(index) {
-  shots[i].classList.remove("is-active");
-  i = (index + shots.length) % shots.length; // wraps around
-  shots[i].classList.add("is-active");
-}
-prevBtn?.addEventListener("click", () => showShot(i - 1));
-nextBtn?.addEventListener("click", () => showShot(i + 1));
+  let i = Math.max(0, shots.findIndex((shot) => shot.classList.contains("is-active")));
+
+  function showShot(index) {
+    shots[i].classList.remove("is-active");
+    i = (index + shots.length) % shots.length;
+    shots[i].classList.add("is-active");
+  }
+
+  prevBtn?.addEventListener("click", () => showShot(i - 1));
+  nextBtn?.addEventListener("click", () => showShot(i + 1));
+});
 
 // Scroll spy for nav
 const spy = () => {
